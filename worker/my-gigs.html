@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Gigs - Rapid Light</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/my-gigs.css"
+    >
+
+    <!-- Worker-only page protection -->
+    <script>
+        const loggedIn =
+            localStorage.getItem("rapidLightLoggedIn");
+
+        const role =
+            localStorage.getItem("rapidLightUserRole");
+
+        if (
+            loggedIn !== "true" ||
+            role !== "worker"
+        ) {
+            window.location.href = "../index.html";
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="top-header">
+
+        <button
+            class="back-button"
+            onclick="goBack()"
+        >
+            ←
+        </button>
+
+        <div class="header-title">
+            <h1>My Gigs</h1>
+            <p>Manage your work</p>
+        </div>
+
+        <button
+            class="refresh-button"
+            onclick="loadGigs()"
+        >
+            ↻
+        </button>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main class="main-content">
+
+        <!-- Tabs -->
+
+        <div class="tabs">
+
+            <button
+                class="tab active"
+                data-tab="Applied"
+                onclick="changeTab('Applied')"
+            >
+                <span>Applied</span>
+                <b id="appliedCount">0</b>
+            </button>
+
+            <button
+                class="tab"
+                data-tab="Accepted"
+                onclick="changeTab('Accepted')"
+            >
+                <span>Accepted</span>
+                <b id="acceptedCount">0</b>
+            </button>
+
+            <button
+                class="tab"
+                data-tab="Active"
+                onclick="changeTab('Active')"
+            >
+                <span>Active</span>
+                <b id="activeCount">0</b>
+            </button>
+
+            <button
+                class="tab"
+                data-tab="Completed"
+                onclick="changeTab('Completed')"
+            >
+                <span>Completed</span>
+                <b id="completedCount">0</b>
+            </button>
+
+        </div>
+
+
+        <!-- Gig list -->
+
+        <section
+            id="gigList"
+            class="gig-list"
+        ></section>
+
+
+        <!-- Empty state -->
+
+        <section
+            id="emptyState"
+            class="empty-state"
+        >
+
+            <div class="empty-icon">
+                📋
+            </div>
+
+            <h2 id="emptyTitle">
+                No gigs found
+            </h2>
+
+            <p id="emptyText">
+                Your gigs will appear here.
+            </p>
+
+            <button
+                onclick="goHome()"
+                class="browse-button"
+            >
+                Browse Gigs
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         GIG DETAILS MODAL
+    ========================= -->
+
+    <div
+        id="detailsModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+            <button
+                class="modal-close"
+                onclick="closeModal('detailsModal')"
+            >
+                ×
+            </button>
+
+            <div id="gigDetailsContent"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         RATING MODAL
+    ========================= -->
+
+    <div
+        id="ratingModal"
+        class="modal"
+    >
+
+        <div class="modal-content rating-content">
+
+            <button
+                class="modal-close"
+                onclick="closeModal('ratingModal')"
+            >
+                ×
+            </button>
+
+            <div class="rating-header">
+
+                <div class="rating-icon">
+                    ⭐
+                </div>
+
+                <h2>
+                    Rate this Gig
+                </h2>
+
+                <p>
+                    How was your experience?
+                </p>
+
+            </div>
+
+
+            <div
+                id="starContainer"
+                class="star-container"
+            >
+
+                <button
+                    class="star"
+                    data-rating="1"
+                    onclick="selectRating(1)"
+                >
+                    ★
+                </button>
+
+                <button
+                    class="star"
+                    data-rating="2"
+                    onclick="selectRating(2)"
+                >
+                    ★
+                </button>
+
+                <button
+                    class="star"
+                    data-rating="3"
+                    onclick="selectRating(3)"
+                >
+                    ★
+                </button>
+
+                <button
+                    class="star"
+                    data-rating="4"
+                    onclick="selectRating(4)"
+                >
+                    ★
+                </button>
+
+                <button
+                    class="star"
+                    data-rating="5"
+                    onclick="selectRating(5)"
+                >
+                    ★
+                </button>
+
+            </div>
+
+
+            <p
+                id="ratingText"
+                class="rating-text"
+            >
+                Select a rating
+            </p>
+
+
+            <textarea
+                id="ratingComment"
+                placeholder="Write a comment (optional)"
+                rows="4"
+            ></textarea>
+
+
+            <button
+                class="submit-rating"
+                onclick="submitRating()"
+            >
+                Submit Rating
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         BOTTOM NAVIGATION
+    ========================= -->
+
+    <nav class="bottom-nav">
+
+        <button onclick="goHome()">
+
+            <span>⌂</span>
+
+            <small>
+                Home
+            </small>
+
+        </button>
+
+
+        <button
+            class="active"
+            onclick="goToMyGigs()"
+        >
+
+            <span>▣</span>
+
+            <small>
+                My Gigs
+            </small>
+
+        </button>
+
+
+        <button onclick="openProfile()">
+
+            <span>◉</span>
+
+            <small>
+                Profile
+            </small>
+
+        </button>
+
+    </nav>
+
+
+    <script src="../js/auth.js"></script>
+
+    <script src="../js/my-gigs.js"></script>
+
+</body>
+</html>
