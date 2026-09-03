@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Rapid Light - Gig Details</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/gig-details.css"
+    >
+    <head>
+
+    <!-- existing meta/title/css -->
+
+    <script>
+        const loggedIn =
+            localStorage.getItem("rapidLightLoggedIn");
+
+        const role =
+            localStorage.getItem("rapidLightUserRole");
+
+        if (
+            loggedIn !== "true" ||
+            role !== "worker"
+        ) {
+            window.location.href = "../index.html";
+        }
+    </script>
+
+</head>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+
+    <header class="details-header">
+
+        <button
+            class="back-button"
+            onclick="goBack()"
+        >
+            ←
+        </button>
+
+        <h2>
+            Gig Details
+        </h2>
+
+        <button
+            class="share-button"
+            onclick="shareGig()"
+        >
+            ↗
+        </button>
+
+    </header>
+
+
+    <!-- GIG HERO -->
+
+    <section class="gig-hero">
+
+        <span class="category-label">
+            HOME SERVICES
+        </span>
+
+        <h1 id="gigTitle">
+            House Cleaning
+        </h1>
+
+        <p class="employer-name">
+            Posted by HomeCare Services
+        </p>
+
+        <div class="rating">
+
+            ⭐ 4.8
+
+            <span>
+                Employer rating
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- PAYMENT -->
+
+    <section class="payment-card">
+
+        <div>
+
+            <small>
+                YOU WILL EARN
+            </small>
+
+            <h2 id="gigPrice">
+                ₹600
+            </h2>
+
+        </div>
+
+        <div class="payment-type">
+            Fixed payment
+        </div>
+
+    </section>
+
+
+    <!-- QUICK DETAILS -->
+
+    <section class="section">
+
+        <h3>
+            Gig Information
+        </h3>
+
+
+        <div class="info-grid">
+
+            <div class="info-box">
+
+                <span>
+                    📍
+                </span>
+
+                <div>
+
+                    <small>
+                        Distance
+                    </small>
+
+                    <strong>
+                        2.4 km
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>
+                    ⏱
+                </span>
+
+                <div>
+
+                    <small>
+                        Duration
+                    </small>
+
+                    <strong>
+                        2 hours
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>
+                    📅
+                </span>
+
+                <div>
+
+                    <small>
+                        Date
+                    </small>
+
+                    <strong>
+                        Today
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>
+                    🕐
+                </span>
+
+                <div>
+
+                    <small>
+                        Start Time
+                    </small>
+
+                    <strong>
+                        5:00 PM
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- LOCATION -->
+
+    <section class="section">
+
+        <h3>
+            Location
+        </h3>
+
+        <div class="location-card">
+
+            <div class="map-placeholder">
+
+                📍
+
+            </div>
+
+            <div class="location-details">
+
+                <strong>
+                    Ashok Nagar, Jaipur
+                </strong>
+
+                <p>
+                    Exact address will be
+                    shared after acceptance.
+                </p>
+
+                <button onclick="openMap()">
+                    View on Map
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DESCRIPTION -->
+
+    <section class="section">
+
+        <h3>
+            About This Gig
+        </h3>
+
+        <p class="description">
+
+            Looking for a reliable worker to
+            help with cleaning a residential
+            apartment.
+
+            <br><br>
+
+            The work includes basic cleaning,
+            dusting, sweeping, mopping and
+            organizing the rooms.
+
+            <br><br>
+
+            Cleaning equipment will be
+            provided at the location.
+
+        </p>
+
+    </section>
+
+
+    <!-- SKILLS -->
+
+    <section class="section">
+
+        <h3>
+            Skills Required
+        </h3>
+
+        <div class="skills">
+
+            <span>
+                Home Cleaning
+            </span>
+
+            <span>
+                Basic Cleaning
+            </span>
+
+            <span>
+                Time Management
+            </span>
+
+            <span>
+                Reliability
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- EMPLOYER -->
+
+    <section class="section">
+
+        <h3>
+            About the Employer
+        </h3>
+
+        <div class="employer-card">
+
+            <div class="employer-avatar">
+                HC
+            </div>
+
+            <div class="employer-info">
+
+                <strong>
+                    HomeCare Services
+                </strong>
+
+                <span>
+                    ⭐ 4.8 · 126 completed gigs
+                </span>
+
+                <small>
+                    Member since 2025
+                </small>
+
+            </div>
+
+            <button
+                onclick="viewEmployer()"
+            >
+                →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- SAFETY -->
+
+    <section class="safety-card">
+
+        <div class="safety-icon">
+            🛡️
+        </div>
+
+        <div>
+
+            <strong>
+                Rapid Light Safety
+            </strong>
+
+            <p>
+                Payment protection and
+                worker support are available
+                for eligible gigs.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- BOTTOM APPLY -->
+
+    <div class="apply-container">
+
+        <div class="bottom-price">
+
+            <small>
+                You'll earn
+            </small>
+
+            <strong>
+                ₹600
+            </strong>
+
+        </div>
+
+        <button
+            class="apply-button"
+            onclick="applyForGig()"
+        >
+            APPLY FOR GIG
+        </button>
+
+    </div>
+
+
+    <!-- SUCCESS MODAL -->
+
+    <div
+        id="successModal"
+        class="modal"
+    >
+
+        <div class="success-card">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>
+                Application Sent!
+            </h2>
+
+            <p>
+                Your application for
+                <strong>House Cleaning</strong>
+                has been submitted.
+            </p>
+
+            <p class="success-note">
+                The employer will review your
+                profile and notify you when
+                your application is accepted.
+            </p>
+
+            <button
+                onclick="goToMyGigs()"
+            >
+                GO TO MY GIGS
+            </button>
+
+            <button
+                class="secondary-button"
+                onclick="closeSuccess()"
+            >
+                CONTINUE BROWSING
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="../js/gig-details.js"></script>
+
+</body>
+<script src="../js/auth.js"></script>
+<script src="../js/gig-details.js"></script>
+</html>

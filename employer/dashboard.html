@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employer Dashboard - Rapid Light</title>
+
+    <link rel="stylesheet" href="../css/employer.css">
+    <script>
+    const employerLoggedIn =
+        localStorage.getItem("rapidLightLoggedIn");
+
+    const employerRole =
+        localStorage.getItem("rapidLightUserRole");
+
+    if (
+        employerLoggedIn !== "true" ||
+        employerRole !== "employer"
+    ) {
+        window.location.href = "../index.html";
+    }
+</script>
+</head>
+
+<body>
+
+<div class="employer-app">
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="employer-header">
+
+        <div class="header-top">
+
+            <div class="brand">
+                <div class="brand-logo">R</div>
+
+                <div>
+                    <h1>Rapid Light</h1>
+                    <span>Employer</span>
+                </div>
+            </div>
+
+            <button
+                class="notification-btn"
+                onclick="showNotifications()"
+            >
+                🔔
+            </button>
+
+        </div>
+
+        <div class="greeting">
+
+            <p>Good morning 👋</p>
+
+            <h2>Welcome back, Raj</h2>
+
+            <span class="location">
+                📍 Jaipur, Rajasthan
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="dashboard-content">
+
+
+        <!-- POST GIG -->
+
+        <section class="post-gig-banner">
+
+            <div class="post-content">
+
+                <span class="post-label">
+                    NEED HELP?
+                </span>
+
+                <h2>Post a Gig</h2>
+
+                <p>
+                    Find reliable gig workers for your work.
+                </p>
+
+                <button
+                    class="post-btn"
+                    onclick="postNewGig()"
+                >
+                    + POST NEW GIG
+                </button>
+
+            </div>
+
+            <div class="post-icon">
+                +
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             STATS
+        ========================== -->
+
+        <section class="section">
+
+            <div class="section-heading">
+
+                <h3>Overview</h3>
+
+                <span>This week</span>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        📋
+                    </div>
+
+                    <strong>12</strong>
+
+                    <span>Gigs Posted</span>
+
+                    <small>+3 this week</small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        👥
+                    </div>
+
+                    <strong>38</strong>
+
+                    <span>Applications</span>
+
+                    <small>8 new today</small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        ⚡
+                    </div>
+
+                    <strong>5</strong>
+
+                    <span>Active Gigs</span>
+
+                    <small>2 starting today</small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        ✓
+                    </div>
+
+                    <strong>27</strong>
+
+                    <span>Completed</span>
+
+                    <small>₹24,600 paid</small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ACTIVE GIGS
+        ========================== -->
+
+        <section class="section">
+
+            <div class="section-heading">
+
+                <h3>Active Gigs</h3>
+
+                <button onclick="viewAllGigs()">
+                    View All →
+                </button>
+
+            </div>
+
+
+            <!-- Gig -->
+
+            <article class="employer-gig-card">
+
+                <div class="gig-card-top">
+
+                    <div>
+
+                        <span class="gig-category">
+                            Moving & Loading
+                        </span>
+
+                        <h4>
+                            Furniture Moving Assistant
+                        </h4>
+
+                        <p>
+                            📍 Vaishali Nagar, Jaipur
+                        </p>
+
+                    </div>
+
+                    <span class="active-badge">
+                        ACTIVE
+                    </span>
+
+                </div>
+
+
+                <div class="gig-worker">
+
+                    <div class="worker-avatar">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Assigned Worker
+                        </strong>
+
+                        <span>
+                            ⭐ 4.8 • 126 gigs
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="gig-details">
+
+                    <div>
+                        <span>Date</span>
+                        <strong>Today, 2:00 PM</strong>
+                    </div>
+
+                    <div>
+                        <span>Payment</span>
+                        <strong>₹900</strong>
+                    </div>
+
+                    <div>
+                        <span>Progress</span>
+                        <strong>65%</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress"
+                        style="width:65%"
+                    ></div>
+
+                </div>
+
+
+                <div class="card-actions">
+
+                    <button
+                        onclick="viewActiveGig()"
+                    >
+                        View Gig
+                    </button>
+
+                    <button
+                        class="primary"
+                        onclick="contactWorker()"
+                    >
+                        Contact Worker
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- Second Gig -->
+
+            <article class="employer-gig-card">
+
+                <div class="gig-card-top">
+
+                    <div>
+
+                        <span class="gig-category">
+                            Home Services
+                        </span>
+
+                        <h4>
+                            Apartment Deep Cleaning
+                        </h4>
+
+                        <p>
+                            📍 C-Scheme, Jaipur
+                        </p>
+
+                    </div>
+
+                    <span class="scheduled-badge">
+                        SCHEDULED
+                    </span>
+
+                </div>
+
+
+                <div class="gig-details">
+
+                    <div>
+                        <span>Date</span>
+                        <strong>Tomorrow</strong>
+                    </div>
+
+                    <div>
+                        <span>Time</span>
+                        <strong>10:00 AM</strong>
+                    </div>
+
+                    <div>
+                        <span>Payment</span>
+                        <strong>₹1,200</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="card-actions">
+
+                    <button
+                        onclick="viewGigDetails()"
+                    >
+                        View Details
+                    </button>
+
+                    <button
+                        class="primary"
+                        onclick="manageApplicants()"
+                    >
+                        4 Applicants
+                    </button>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =========================
+             APPLICATIONS
+        ========================== -->
+
+        <section class="section">
+
+            <div class="section-heading">
+
+                <h3>Recent Applications</h3>
+
+                <button onclick="viewApplications()">
+                    View All →
+                </button>
+
+            </div>
+
+
+            <article class="application-card">
+
+                <div class="applicant-avatar">
+                    R
+                </div>
+
+                <div class="applicant-info">
+
+                    <strong>
+                        Rahul Kumar
+                    </strong>
+
+                    <span>
+                        Applied for House Cleaning
+                    </span>
+
+                    <small>
+                        ⭐ 4.7 • 84 completed gigs
+                    </small>
+
+                </div>
+
+                <button
+                    class="review-btn"
+                    onclick="reviewApplicant('Rahul Kumar')"
+                >
+                    Review
+                </button>
+
+            </article>
+
+
+            <article class="application-card">
+
+                <div class="applicant-avatar">
+                    P
+                </div>
+
+                <div class="applicant-info">
+
+                    <strong>
+                        Priya Sharma
+                    </strong>
+
+                    <span>
+                        Applied for Event Helper
+                    </span>
+
+                    <small>
+                        ⭐ 4.9 • 112 completed gigs
+                    </small>
+
+                </div>
+
+                <button
+                    class="review-btn"
+                    onclick="reviewApplicant('Priya Sharma')"
+                >
+                    Review
+                </button>
+
+            </article>
+
+
+            <article class="application-card">
+
+                <div class="applicant-avatar">
+                    M
+                </div>
+
+                <div class="applicant-info">
+
+                    <strong>
+                        Mohit Singh
+                    </strong>
+
+                    <span>
+                        Applied for Delivery Gig
+                    </span>
+
+                    <small>
+                        ⭐ 4.6 • 57 completed gigs
+                    </small>
+
+                </div>
+
+                <button
+                    class="review-btn"
+                    onclick="reviewApplicant('Mohit Singh')"
+                >
+                    Review
+                </button>
+
+            </article>
+
+        </section>
+
+
+        <!-- =========================
+             CATEGORIES
+        ========================== -->
+
+        <section class="section">
+
+            <div class="section-heading">
+
+                <h3>Post by Category</h3>
+
+            </div>
+
+
+            <div class="category-grid">
+
+                <button onclick="selectCategory('Delivery & Logistics')">
+                    <span>📦</span>
+                    <small>Delivery</small>
+                </button>
+
+                <button onclick="selectCategory('Driving & Transport')">
+                    <span>🚗</span>
+                    <small>Driving</small>
+                </button>
+
+                <button onclick="selectCategory('Home Services')">
+                    <span>🧹</span>
+                    <small>Home Services</small>
+                </button>
+
+                <button onclick="selectCategory('Repair & Maintenance')">
+                    <span>🔧</span>
+                    <small>Repair</small>
+                </button>
+
+                <button onclick="selectCategory('Moving & Loading')">
+                    <span>📦</span>
+                    <small>Moving</small>
+                </button>
+
+                <button onclick="selectCategory('Events')">
+                    <span>🎪</span>
+                    <small>Events</small>
+                </button>
+
+                <button onclick="selectCategory('Digital & Freelance')">
+                    <span>💻</span>
+                    <small>Digital</small>
+                </button>
+
+                <button onclick="showAllCategories()">
+                    <span>•••</span>
+                    <small>More</small>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             QUICK ACTIONS
+        ========================== -->
+
+        <section class="section">
+
+            <div class="section-heading">
+                <h3>Quick Actions</h3>
+            </div>
+
+
+            <div class="quick-actions">
+
+                <button onclick="postNewGig()">
+                    <span>＋</span>
+                    <strong>Post a Gig</strong>
+                    <small>Create a new job</small>
+                </button>
+
+                <button onclick="findWorkers()">
+                    <span>👥</span>
+                    <strong>Find Workers</strong>
+                    <small>Browse gig workers</small>
+                </button>
+
+                <button onclick="viewApplications()">
+                    <span>📋</span>
+                    <strong>Applications</strong>
+                    <small>Review candidates</small>
+                </button>
+
+                <button onclick="openMessages()">
+                    <span>💬</span>
+                    <strong>Messages</strong>
+                    <small>Chat with workers</small>
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         BOTTOM NAV
+    ========================== -->
+
+    <nav class="bottom-nav">
+
+        <button class="nav-active" onclick="goHome()">
+            <span>⌂</span>
+            <small>Home</small>
+        </button>
+
+        <button onclick="viewAllGigs()">
+            <span>▣</span>
+            <small>My Gigs</small>
+        </button>
+
+        <button
+            class="post-nav-btn"
+            onclick="postNewGig()"
+        >
+            <span>+</span>
+        </button>
+
+        <button onclick="openMessages()">
+            <span>💬</span>
+            <small>Messages</small>
+        </button>
+
+        <button onclick="openEmployerProfile()">
+            <span>●</span>
+            <small>Profile</small>
+        </button>
+
+    </nav>
+
+</div>
+
+
+<!-- =========================
+     CATEGORY MODAL
+========================== -->
+
+<div
+    class="modal-overlay"
+    id="categoryModal"
+>
+
+    <div class="category-modal">
+
+        <button
+            class="close-modal"
+            onclick="closeCategories()"
+        >
+            ×
+        </button>
+
+        <h2>Gig Categories</h2>
+
+        <p>
+            Choose the type of worker you need.
+        </p>
+
+
+        <div class="all-category-list">
+
+            <button onclick="selectCategory('Delivery & Logistics')">
+                📦 Delivery & Logistics
+            </button>
+
+            <button onclick="selectCategory('Driving & Transport')">
+                🚗 Driving & Transport
+            </button>
+
+            <button onclick="selectCategory('Home Services')">
+                🧹 Home Services
+            </button>
+
+            <button onclick="selectCategory('Repair & Maintenance')">
+                🔧 Repair & Maintenance
+            </button>
+
+            <button onclick="selectCategory('Moving & Loading')">
+                📦 Moving & Loading
+            </button>
+
+            <button onclick="selectCategory('Food & Hospitality')">
+                🍽 Food & Hospitality
+            </button>
+
+            <button onclick="selectCategory('Events')">
+                🎪 Events
+            </button>
+
+            <button onclick="selectCategory('Digital & Freelance')">
+                💻 Digital & Freelance
+            </button>
+
+            <button onclick="selectCategory('Marketing & Sales')">
+                📣 Marketing & Sales
+            </button>
+
+            <button onclick="selectCategory('Education')">
+                📚 Education
+            </button>
+
+            <button onclick="selectCategory('Care Services')">
+                ❤️ Care Services
+            </button>
+
+            <button onclick="selectCategory('Agriculture')">
+                🌱 Agriculture
+            </button>
+
+            <button onclick="selectCategory('Construction')">
+                🏗 Construction
+            </button>
+
+            <button onclick="selectCategory('Creative Services')">
+                🎨 Creative Services
+            </button>
+
+            <button onclick="selectCategory('Professional Services')">
+                💼 Professional Services
+            </button>
+
+            <button onclick="selectCategory('General Helpers')">
+                🧰 General Helpers
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="../js/employer.js"></script>
+
+</body>
+<script src="../js/auth.js"></script>
+<script src="../js/employer.js"></script>
+</html>

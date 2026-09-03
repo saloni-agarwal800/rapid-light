@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Post a Gig - Rapid Light</title>
+
+    <link rel="stylesheet" href="../css/post-gig.css">
+    <script>
+    const loggedIn =
+        localStorage.getItem("rapidLightLoggedIn");
+
+    const role =
+        localStorage.getItem("rapidLightUserRole");
+
+    if (
+        loggedIn !== "true" ||
+        role !== "employer"
+    ) {
+        window.location.href = "../index.html";
+    }
+</script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="top-header">
+        <button class="back-btn" onclick="goBack()">←</button>
+
+        <div>
+            <h1>Post a Gig</h1>
+            <p>Find the right worker for your job</p>
+        </div>
+    </header>
+
+
+    <!-- FORM -->
+    <main class="form-container">
+
+        <form id="gigForm">
+
+            <!-- GIG TITLE -->
+            <div class="form-group">
+                <label for="gigTitle">Gig Title *</label>
+
+                <input
+                    type="text"
+                    id="gigTitle"
+                    placeholder="e.g. House Cleaning Assistant"
+                    required
+                >
+            </div>
+
+
+            <!-- CATEGORY -->
+            <div class="form-group">
+                <label for="gigCategory">Gig Category *</label>
+
+                <select id="gigCategory" required>
+                    <option value="">Select category</option>
+
+                    <option>Delivery & Logistics</option>
+                    <option>Driving & Transport</option>
+                    <option>Home Services</option>
+                    <option>Repair & Maintenance</option>
+                    <option>Moving & Loading</option>
+                    <option>Food & Hospitality</option>
+                    <option>Events</option>
+                    <option>Digital & Freelance</option>
+                    <option>Marketing & Sales</option>
+                    <option>Education</option>
+                    <option>Care Services</option>
+                    <option>Agriculture</option>
+                    <option>Construction</option>
+                    <option>Creative Services</option>
+                    <option>Professional Services</option>
+                    <option>General Helpers</option>
+                </select>
+            </div>
+
+
+            <!-- DESCRIPTION -->
+            <div class="form-group">
+                <label for="gigDescription">Work Description *</label>
+
+                <textarea
+                    id="gigDescription"
+                    rows="5"
+                    placeholder="Explain what the worker needs to do..."
+                    required
+                ></textarea>
+            </div>
+
+
+            <!-- LOCATION -->
+            <div class="form-group">
+                <label for="gigLocation">Work Location *</label>
+
+                <input
+                    type="text"
+                    id="gigLocation"
+                    placeholder="e.g. Ashok Nagar, Jaipur"
+                    required
+                >
+            </div>
+
+
+            <!-- DATE -->
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="gigDate">Date *</label>
+
+                    <input
+                        type="date"
+                        id="gigDate"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="gigTime">Start Time *</label>
+
+                    <input
+                        type="time"
+                        id="gigTime"
+                        required
+                    >
+                </div>
+
+            </div>
+
+
+            <!-- DURATION -->
+            <div class="form-group">
+                <label for="gigDuration">Duration *</label>
+
+                <select id="gigDuration" required>
+                    <option value="">Select duration</option>
+                    <option value="1 hour">1 hour</option>
+                    <option value="2 hours">2 hours</option>
+                    <option value="3 hours">3 hours</option>
+                    <option value="4 hours">4 hours</option>
+                    <option value="5 hours">5 hours</option>
+                    <option value="6 hours">6 hours</option>
+                    <option value="8 hours">8 hours</option>
+                    <option value="Full Day">Full Day</option>
+                    <option value="Multiple Days">Multiple Days</option>
+                </select>
+            </div>
+
+
+            <!-- PAYMENT -->
+            <div class="form-group">
+                <label for="gigPayment">Payment per Gig *</label>
+
+                <div class="payment-input">
+                    <span>₹</span>
+
+                    <input
+                        type="number"
+                        id="gigPayment"
+                        placeholder="900"
+                        min="1"
+                        required
+                    >
+                </div>
+            </div>
+
+
+            <!-- WORKERS -->
+            <div class="form-group">
+                <label for="workersRequired">
+                    Number of Workers Required *
+                </label>
+
+                <input
+                    type="number"
+                    id="workersRequired"
+                    value="1"
+                    min="1"
+                    max="100"
+                    required
+                >
+            </div>
+
+
+            <!-- SKILLS -->
+            <div class="form-group">
+                <label for="gigSkills">Skills Required</label>
+
+                <input
+                    type="text"
+                    id="gigSkills"
+                    placeholder="e.g. Cleaning, Lifting, Communication"
+                >
+
+                <small>
+                    Separate multiple skills with commas
+                </small>
+            </div>
+
+
+            <!-- SPECIAL REQUIREMENTS -->
+            <div class="form-group">
+                <label for="specialRequirements">
+                    Special Requirements
+                </label>
+
+                <textarea
+                    id="specialRequirements"
+                    rows="4"
+                    placeholder="Any special instructions or requirements..."
+                ></textarea>
+            </div>
+
+
+            <!-- SAFETY -->
+            <div class="safety-box">
+                <span>🛡️</span>
+
+                <div>
+                    <strong>Rapid Light Safety</strong>
+
+                    <p>
+                        Keep work details accurate and never request
+                        unsafe or illegal work.
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- BUTTONS -->
+            <div class="form-actions">
+
+                <button
+                    type="button"
+                    class="preview-btn"
+                    onclick="previewGig()"
+                >
+                    Preview Gig
+                </button>
+
+                <button
+                    type="submit"
+                    class="publish-btn"
+                >
+                    Publish Gig
+                </button>
+
+            </div>
+
+        </form>
+
+    </main>
+
+
+    <!-- PREVIEW MODAL -->
+    <div class="modal" id="previewModal">
+
+        <div class="modal-content">
+
+            <button
+                class="close-btn"
+                onclick="closePreview()"
+            >
+                ×
+            </button>
+
+            <div class="preview-header">
+                <span id="previewCategory">Category</span>
+
+                <h2 id="previewTitle">Gig Title</h2>
+
+                <p id="previewLocation">Location</p>
+            </div>
+
+
+            <div class="preview-payment">
+                <span>Payment</span>
+
+                <strong id="previewPayment">₹0</strong>
+            </div>
+
+
+            <div class="preview-details">
+
+                <div>
+                    <span>📅</span>
+                    <p>
+                        <small>Date</small>
+                        <strong id="previewDate">-</strong>
+                    </p>
+                </div>
+
+                <div>
+                    <span>⏰</span>
+                    <p>
+                        <small>Start</small>
+                        <strong id="previewTime">-</strong>
+                    </p>
+                </div>
+
+                <div>
+                    <span>⏱️</span>
+                    <p>
+                        <small>Duration</small>
+                        <strong id="previewDuration">-</strong>
+                    </p>
+                </div>
+
+                <div>
+                    <span>👷</span>
+                    <p>
+                        <small>Workers</small>
+                        <strong id="previewWorkers">-</strong>
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="preview-section">
+
+                <h3>Description</h3>
+
+                <p id="previewDescription"></p>
+
+            </div>
+
+
+            <div class="preview-section">
+
+                <h3>Skills</h3>
+
+                <div
+                    id="previewSkills"
+                    class="skill-list"
+                ></div>
+
+            </div>
+
+
+            <div class="preview-section">
+
+                <h3>Special Requirements</h3>
+
+                <p id="previewRequirements"></p>
+
+            </div>
+
+
+            <button
+                class="publish-btn modal-publish"
+                onclick="publishFromPreview()"
+            >
+                Publish Gig
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUCCESS MODAL -->
+    <div class="modal" id="successModal">
+
+        <div class="success-content">
+
+            <div class="success-icon">✓</div>
+
+            <h2>Gig Published!</h2>
+
+            <p>
+                Your gig is now visible to suitable gig workers.
+            </p>
+
+            <button
+                class="publish-btn"
+                onclick="goToMyGigs()"
+            >
+                View My Gigs
+            </button>
+
+            <button
+                class="secondary-btn"
+                onclick="createAnotherGig()"
+            >
+                Post Another Gig
+            </button>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<script src="../js/post-gig.js"></script>
+
+</body>
+<script src="../js/auth.js"></script>
+<script src="../js/post-gig.js"></script>
+</html>

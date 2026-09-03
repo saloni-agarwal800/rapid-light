@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Rapid Light - Gig Worker</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/worker.css"
+    >
+    <script>
+    const workerLoggedIn =
+        localStorage.getItem("rapidLightLoggedIn");
+
+    const workerRole =
+        localStorage.getItem("rapidLightUserRole");
+
+    if (
+        workerLoggedIn !== "true" ||
+        workerRole !== "worker"
+    ) {
+        window.location.href = "../index.html";
+    }
+</script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="worker-header">
+
+        <div class="top-bar">
+
+            <div class="logo">
+                RAPID LIGHT
+            </div>
+
+            <div class="header-actions">
+
+                <button onclick="openNotifications()">
+                    🔔
+                </button>
+
+                <button onclick="openProfile()">
+                    👤
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="greeting">
+
+            <h2>
+                Good evening, Worker 👋
+            </h2>
+
+            <p>
+                Find your next gig and start earning.
+            </p>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="location">
+
+            <span class="location-icon">
+                📍
+            </span>
+
+            <div>
+
+                <strong>Jaipur</strong>
+
+                <small>
+                    Current location
+                </small>
+
+            </div>
+
+            <span class="location-arrow">
+               ⌄
+            </span>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-container">
+
+            <span class="search-icon">
+                🔍
+            </span>
+
+            <input
+                type="text"
+                id="gigSearch"
+                placeholder="Search gigs, skills or services..."
+                oninput="searchGigs()"
+            >
+
+            <button
+                class="filter-button"
+                onclick="openFilters()"
+            >
+                ☷
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- =========================
+             QUICK STATS
+        ========================== -->
+
+        <section class="stats-section">
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    💰
+                </span>
+
+                <div>
+                    <small>
+                        Today's Earnings
+                    </small>
+
+                    <strong>
+                        ₹1,250
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    📋
+                </span>
+
+                <div>
+                    <small>
+                        Completed Gigs
+                    </small>
+
+                    <strong>
+                        18
+                    </strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CATEGORIES
+        ========================== -->
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <h3>
+                    Explore Categories
+                </h3>
+
+                <button onclick="openCategories()">
+                    See All
+                </button>
+
+            </div>
+
+
+            <div class="category-grid">
+
+
+                <div
+                    class="category-card"
+                    onclick="filterCategory('Delivery')"
+                >
+
+                    <div class="category-image">
+                        🚚
+                    </div>
+
+                    <p>
+                        Delivery & Logistics
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="category-card"
+                    onclick="filterCategory('Driving')"
+                >
+
+                    <div class="category-image">
+                        🚗
+                    </div>
+
+                    <p>
+                        Driving & Transport
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="category-card"
+                    onclick="filterCategory('Home')"
+                >
+
+                    <div class="category-image">
+                        🏠
+                    </div>
+
+                    <p>
+                        Home Services
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="category-card"
+                    onclick="filterCategory('Repair')"
+                >
+
+                    <div class="category-image">
+                        🔧
+                    </div>
+
+                    <p>
+                        Repair & Maintenance
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="category-card"
+                    onclick="filterCategory('Moving')"
+                >
+
+                    <div class="category-image">
+                        📦
+                    </div>
+
+                    <p>
+                        Moving & Loading
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="category-card"
+                    onclick="filterCategory('Food')"
+                >
+
+                    <div class="category-image">
+                        🍔
+                    </div>
+
+                    <p>
+                        Food & Hospitality
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ACTIVE GIG
+        ========================== -->
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <h3>
+                    Your Active Gig
+                </h3>
+
+                <button onclick="openMyGigs()">
+                    View All
+                </button>
+
+            </div>
+
+
+            <div class="active-gig-card">
+
+                <div class="active-badge">
+                    ● IN PROGRESS
+                </div>
+
+                <h3>
+                    Furniture Moving Assistant
+                </h3>
+
+                <p class="employer">
+                    HomeMove Services
+                </p>
+
+                <div class="active-details">
+
+                    <span>
+                        📍 2.1 km
+                    </span>
+
+                    <span>
+                        ⏱ 2.5 hours
+                    </span>
+
+                    <span>
+                        💰 ₹900
+                    </span>
+
+                </div>
+
+
+                <div class="progress-container">
+
+                    <div class="progress-label">
+
+                        <span>
+                            Gig progress
+                        </span>
+
+                        <span>
+                            65%
+                        </span>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress"
+                            style="width:65%"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="active-button"
+                    onclick="openActiveGig()"
+                >
+                    View Active Gig
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             RECOMMENDED GIGS
+        ========================== -->
+
+        <section class="section gigs-section">
+
+            <div class="section-header">
+
+                <h3>
+                    Recommended Gigs
+                </h3>
+
+                <button onclick="clearFilter()">
+                    View All
+                </button>
+
+            </div>
+
+
+            <div id="gigList">
+
+
+                <!-- GIG 1 -->
+
+                <article
+                    class="gig-card"
+                    data-category="Home"
+                >
+
+                    <div class="gig-header">
+
+                        <div>
+
+                            <span class="gig-category">
+                                HOME SERVICES
+                            </span>
+
+                            <h4>
+                                House Cleaning
+                            </h4>
+
+                        </div>
+
+                        <strong class="gig-price">
+                            ₹600
+                        </strong>
+
+                    </div>
+
+
+                    <div class="gig-info">
+
+                        <span>
+                            📍 2.4 km
+                        </span>
+
+                        <span>
+                            ⏱ 2 hours
+                        </span>
+
+                        <span>
+                            📅 Today
+                        </span>
+
+                    </div>
+
+
+                    <p class="gig-description">
+                        Need a reliable person for a
+                        2-hour home cleaning job.
+                    </p>
+
+
+                    <div class="gig-footer">
+
+                        <span>
+                            ⭐ 4.8 Employer
+                        </span>
+
+                        <button
+                            onclick="viewGig('House Cleaning')"
+                        >
+                            View Gig
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <!-- GIG 2 -->
+
+                <article
+                    class="gig-card"
+                    data-category="Moving"
+                >
+
+                    <div class="gig-header">
+
+                        <div>
+
+                            <span class="gig-category">
+                                MOVING & LOADING
+                            </span>
+
+                            <h4>
+                                Packing Assistant
+                            </h4>
+
+                        </div>
+
+                        <strong class="gig-price">
+                            ₹1,000
+                        </strong>
+
+                    </div>
+
+
+                    <div class="gig-info">
+
+                        <span>
+                            📍 3.1 km
+                        </span>
+
+                        <span>
+                            ⏱ 4 hours
+                        </span>
+
+                        <span>
+                            📅 Tomorrow
+                        </span>
+
+                    </div>
+
+
+                    <p class="gig-description">
+                        Help pack household items
+                        before relocation.
+                    </p>
+
+
+                    <div class="gig-footer">
+
+                        <span>
+                            ⭐ 4.6 Employer
+                        </span>
+
+                        <button
+                            onclick="viewGig('Packing Assistant')"
+                        >
+                            View Gig
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <!-- GIG 3 -->
+
+                <article
+                    class="gig-card"
+                    data-category="Delivery"
+                >
+
+                    <div class="gig-header">
+
+                        <div>
+
+                            <span class="gig-category">
+                                DELIVERY
+                            </span>
+
+                            <h4>
+                                Local Parcel Delivery
+                            </h4>
+
+                        </div>
+
+                        <strong class="gig-price">
+                            ₹450
+                        </strong>
+
+                    </div>
+
+
+                    <div class="gig-info">
+
+                        <span>
+                            📍 1.8 km
+                        </span>
+
+                        <span>
+                            ⏱ 1.5 hours
+                        </span>
+
+                        <span>
+                            📅 Today
+                        </span>
+
+                    </div>
+
+
+                    <p class="gig-description">
+                        Deliver two small parcels
+                        within the local area.
+                    </p>
+
+
+                    <div class="gig-footer">
+
+                        <span>
+                            ⭐ 4.9 Employer
+                        </span>
+
+                        <button
+                            onclick="viewGig('Local Parcel Delivery')"
+                        >
+                            View Gig
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <!-- GIG 4 -->
+
+                <article
+                    class="gig-card"
+                    data-category="Repair"
+                >
+
+                    <div class="gig-header">
+
+                        <div>
+
+                            <span class="gig-category">
+                                REPAIR
+                            </span>
+
+                            <h4>
+                                AC Service Helper
+                            </h4>
+
+                        </div>
+
+                        <strong class="gig-price">
+                            ₹800
+                        </strong>
+
+                    </div>
+
+
+                    <div class="gig-info">
+
+                        <span>
+                            📍 4.0 km
+                        </span>
+
+                        <span>
+                            ⏱ 3 hours
+                        </span>
+
+                        <span>
+                            📅 Today
+                        </span>
+
+                    </div>
+
+
+                    <p class="gig-description">
+                        Assist an experienced technician
+                        with AC servicing.
+                    </p>
+
+
+                    <div class="gig-footer">
+
+                        <span>
+                            ⭐ 4.7 Employer
+                        </span>
+
+                        <button
+                            onclick="viewGig('AC Service Helper')"
+                        >
+                            View Gig
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         BOTTOM NAVIGATION
+    ========================== -->
+
+    <nav class="bottom-navigation">
+
+        <button
+            class="nav-item active"
+            onclick="goHome()"
+        >
+
+            <span class="nav-icon">
+                🏠
+            </span>
+
+            <span>
+                Home
+            </span>
+
+        </button>
+
+
+        <button
+            class="nav-item"
+            onclick="openFindGigs()"
+        >
+
+            <span class="nav-icon">
+                🔍
+            </span>
+
+            <span>
+                Find Gigs
+            </span>
+
+        </button>
+
+
+        <button
+            class="nav-item"
+            onclick="openMyGigs()"
+        >
+
+            <span class="nav-icon">
+                📋
+            </span>
+
+            <span>
+                My Gigs
+            </span>
+
+        </button>
+
+
+        <button
+            class="nav-item"
+            onclick="openEarnings()"
+        >
+
+            <span class="nav-icon">
+                💰
+            </span>
+
+            <span>
+                Earnings
+            </span>
+
+        </button>
+
+
+        <button
+            class="nav-item"
+            onclick="openProfile()"
+        >
+
+            <span class="nav-icon">
+                👤
+            </span>
+
+            <span>
+                Profile
+            </span>
+
+        </button>
+
+    </nav>
+
+
+    <!-- =========================
+         CATEGORY MODAL
+    ========================== -->
+
+    <div
+        id="categoryModal"
+        class="modal"
+        onclick="closeCategories(event)"
+    >
+
+        <div
+            class="bottom-sheet"
+            onclick="event.stopPropagation()"
+        >
+
+            <div class="sheet-header">
+
+                <h3>
+                    All Categories
+                </h3>
+
+                <button onclick="closeCategories()">
+                    ✕
+                </button>
+
+            </div>
+
+
+            <div class="all-category-grid">
+
+                <button onclick="filterCategory('Delivery')">
+                    <span>🚚</span>
+                    Delivery & Logistics
+                </button>
+
+                <button onclick="filterCategory('Driving')">
+                    <span>🚗</span>
+                    Driving & Transport
+                </button>
+
+                <button onclick="filterCategory('Home')">
+                    <span>🏠</span>
+                    Home Services
+                </button>
+
+                <button onclick="filterCategory('Repair')">
+                    <span>🔧</span>
+                    Repair & Maintenance
+                </button>
+
+                <button onclick="filterCategory('Moving')">
+                    <span>📦</span>
+                    Moving & Loading
+                </button>
+
+                <button onclick="filterCategory('Food')">
+                    <span>🍔</span>
+                    Food & Hospitality
+                </button>
+
+                <button onclick="filterCategory('Events')">
+                    <span>🎪</span>
+                    Events
+                </button>
+
+                <button onclick="filterCategory('Digital')">
+                    <span>💻</span>
+                    Digital & Freelance
+                </button>
+
+                <button onclick="filterCategory('Marketing')">
+                    <span>📣</span>
+                    Marketing & Sales
+                </button>
+
+                <button onclick="filterCategory('Education')">
+                    <span>👨‍🏫</span>
+                    Education
+                </button>
+
+                <button onclick="filterCategory('Care')">
+                    <span>👶</span>
+                    Care Services
+                </button>
+
+                <button onclick="filterCategory('Agriculture')">
+                    <span>🌾</span>
+                    Agriculture
+                </button>
+
+                <button onclick="filterCategory('Construction')">
+                    <span>🏗️</span>
+                    Construction
+                </button>
+
+                <button onclick="filterCategory('Creative')">
+                    <span>📸</span>
+                    Creative Services
+                </button>
+
+                <button onclick="filterCategory('Professional')">
+                    <span>🧑‍💼</span>
+                    Professional Services
+                </button>
+
+                <button onclick="filterCategory('General')">
+                    <span>🧹</span>
+                    General Helpers
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FILTER MODAL
+    ========================== -->
+
+    <div
+        id="filterModal"
+        class="modal"
+        onclick="closeFilters(event)"
+    >
+
+        <div
+            class="bottom-sheet"
+            onclick="event.stopPropagation()"
+        >
+
+            <div class="sheet-header">
+
+                <h3>
+                    Filter Gigs
+                </h3>
+
+                <button onclick="closeFilters()">
+                    ✕
+                </button>
+
+            </div>
+
+
+            <label>
+                Maximum Distance
+            </label>
+
+            <input
+                type="range"
+                min="1"
+                max="50"
+                value="10"
+                id="distanceRange"
+            >
+
+            <p class="range-value">
+                Within <span id="distanceValue">10</span> km
+            </p>
+
+
+            <label>
+                Minimum Payment
+            </label>
+
+            <select id="minimumPay">
+
+                <option value="0">
+                    Any payment
+                </option>
+
+                <option value="500">
+                    ₹500+
+                </option>
+
+                <option value="1000">
+                    ₹1,000+
+                </option>
+
+                <option value="2000">
+                    ₹2,000+
+                </option>
+
+            </select>
+
+
+            <button
+                class="apply-filter"
+                onclick="applyFilters()"
+            >
+                Apply Filters
+            </button>
+            <button onclick="logoutUser()">
+    Logout
+</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="../js/worker.js"></script>
+
+</body>
+
+<script src="../js/auth.js"></script>
+<script src="../js/worker.js"></script>
+</html>
